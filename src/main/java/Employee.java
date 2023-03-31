@@ -1,9 +1,21 @@
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String gender;
     private int age;
+    @Column(name = "city_id")
     private int cityId;
 
     public Employee(int id, String firstName, String lastName, String gender, int age, int cityId) {
@@ -21,6 +33,10 @@ public class Employee {
         this.gender = gender;
         this.age = age;
         this.cityId = cityId;
+    }
+
+    public Employee() {
+
     }
 
     public int getId() {

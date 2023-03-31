@@ -1,5 +1,5 @@
-import java.sql.*;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -8,6 +8,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private final String PASSWORD = "makeTeanotwar1";
     private final String URL = "jdbc:postgresql://localhost:5432/skypro";
 
+    /*JDBC version
     @Override
     public void createEmployee(Employee employee) {
         String query = "INSERT INTO employee (first_name, last_name, gender, age, city_id) " +
@@ -25,8 +26,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    @Override
+    public void createEmployee(EntityManager entityManager, Employee employee) {
+        entityManager.getTransaction().begin();
+
+        entityManager.persist(employee);
+
+        entityManager.getTransaction().commit();
     }
 
+    /* JDBC version
     @Override
     public Employee getEmployeeById(int id) {
         Employee employee = null;
@@ -52,8 +63,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             e.printStackTrace();
         }
         return employee;
+    }*/
+
+    @Override
+    public Employee getEmployeeById(EntityManager entityManager, int id) {
+        entityManager.getTransaction().begin();
+
+        String jpqlQuery = "SELECT e FROM Employee e WHERE e.id = :id";
+        TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
+        query.setParameter("id", id);
+        Employee employee = query.getSingleResult();
+
+        entityManager.getTransaction().commit();
+
+        return employee;
     }
 
+    /* JDBC version
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
@@ -79,8 +105,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             e.printStackTrace();
         }
         return employees;
+    }*/
+
+    @Override
+    public List<Employee> getAllEmployees(EntityManager entityManager) {
+        entityManager.getTransaction().begin();
+
+        String jpqlQuery = "SELECT e FROM Employee e";
+        TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
+
+        List<Employee> employee = query.getResultList();
+
+        entityManager.getTransaction().commit();
+
+        return employee;
     }
 
+    /*JDBC version
     @Override
     public void updateEmployee(Employee employee) {
         String query = "UPDATE employee SET first_name = (?), last_name = (?), gender = (?), age = (?), city_id = (?) " +
@@ -99,8 +140,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    @Override
+    public void updateEmployee(EntityManager entityManager, Employee employee) {
+        entityManager.getTransaction().begin();
+
+        entityManager.merge(employee);
+
+        entityManager.getTransaction().commit();
     }
 
+    /*JDBC version
     @Override
     public void deleteEmployee(int id) {
         try (final Connection connection =
@@ -112,5 +163,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    @Override
+    public void deleteEmployee(EntityManager entityManager, Employee employee) {
+        entityManager.getTransaction().begin();
+
+        entityManager.remove(employee);
+
+        entityManager.getTransaction().commit();
     }
 }
