@@ -10,7 +10,7 @@ public class Application {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
-        Employee employee = new Employee("Foma", "Kinyaev", "male", 28, 4);
+        Employee employee = new Employee("Alen", "Delon", "male", 55, 4);
         employeeDAO.createEmployee(entityManager, employee);
 
         List<Employee> employeeList = employeeDAO.getAllEmployees(entityManager);
@@ -18,8 +18,8 @@ public class Application {
 
         for (Employee e : employeeList) {
             if (e.getFirstName().equals("Ivan") && e.getLastName().equals("Ivanov")) {
-                e.setAge(30);
-                e.setCityId(1);
+                e.setAge(31);
+                e.setCityId(2);
                 employeeDAO.updateEmployee(entityManager, e);
             }
         }
@@ -29,7 +29,7 @@ public class Application {
         System.out.println(employeeDAO.getEmployeeById(entityManager, 1));
 
         for (Employee e : employeeList) {
-            if (e.getId() == 12) {
+            if (e.getId() == 1) {
                 employeeDAO.deleteEmployee(entityManager, e);
             }
         }
