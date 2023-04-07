@@ -4,10 +4,6 @@ import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-    private final String USER = "postgres";
-    private final String PASSWORD = "makeTeanotwar1";
-    private final String URL = "jdbc:postgresql://localhost:5432/skypro";
-
     /*JDBC version
     @Override
     public void createEmployee(Employee employee) {
