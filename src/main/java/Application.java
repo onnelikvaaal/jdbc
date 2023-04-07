@@ -46,24 +46,24 @@ public class Application {
         CityDAO cityDAO = new CityDAOImpl();
         cityDAO.getSessionFactory().openSession();
 
-        /*City city = new City("Tbilisi");
+        City city = new City("Tbilisi");
         Employee kot = new Employee("Kot", "Narkot", "male", 2, city);
         Employee utka = new Employee("Gospodin", "Utka", "male", 5, city);
         city.getEmployeeList().add(kot);
         city.getEmployeeList().add(utka);
 
-        cityDAO.createCity(city);*/
+        cityDAO.createCity(city);
 
-        /*City city = cityDAO.getCityById(6);
-        for (Employee e : city.getEmployeeList()) {
+        City city1 = cityDAO.getCityById(6);
+        for (Employee e : city1.getEmployeeList()) {
             if (e.getFirstName().equals("Kot")) {
                 e.setLastName("Begemot");
             }
         }
-        cityDAO.updateCity(city);*/
+        cityDAO.updateCity(city1);
 
-        City city = cityDAO.getCityById(1);
-        cityDAO.deleteCity(city);
+        City city2 = cityDAO.getCityById(1);
+        cityDAO.deleteCity(city2);
 
         cityDAO.getSessionFactory().close();
 
